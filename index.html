@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>벤자민 프랭클린 자기경영 인포그래픽</title>
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease, transform 0.3s ease; }
+        .fade-enter-from { opacity: 0; transform: translateX(10px); }
+        .fade-leave-to { opacity: 0; transform: translateX(-10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <div id="app" class="min-h-screen p-4 md:p-8">
+        <!-- Header -->
+        <header class="max-w-6xl mx-auto text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">
+                Benjamin Franklin
+            </h1>
+            <p class="text-xl text-slate-600 font-medium italic">
+                "시간 관리와 자기 경영의 정수 (Vue 버전)"
+            </p>
+            <div class="flex justify-center mt-6 gap-2">
+                <span class="bg-amber-100 text-amber-800 px-4 py-1 rounded-full text-sm font-bold border border-amber-200">#근면</span>
+                <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-bold border border-blue-200">#질서</span>
+                <span class="bg-emerald-100 text-emerald-800 px-4 py-1 rounded-full text-sm font-bold border border-emerald-200">#성찰</span>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Navigation -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-blue-600">
+                        <i data-lucide="compass"></i> 철학 대시보드
+                    </h2>
+                    <div class="space-y-3">
+                        <button 
+                            @click="activeTab = 'virtues'"
+                            :class="activeTab === 'virtues' ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'"
+                            class="w-full flex items-center justify-between p-4 rounded-2xl transition-all"
+                        >
+                            <div class="flex items-center gap-3 font-bold">
+                                <i data-lucide="star" size="20"></i> 13가지 덕목
+                            </div>
+                            <i data-lucide="chevron-right" size="18"></i>
+                        </button>
+                        <button 
+                            @click="activeTab = 'routine'"
+                            :class="activeTab === 'routine' ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'"
+                            class="w-full flex items-center justify-between p-4 rounded-2xl transition-all"
+                        >
+                            <div class="flex items-center gap-3 font-bold">
+                                <i data-lucide="clock" size="20"></i> 일과표 시각화
+                            </div>
+                            <i data-lucide="chevron-right" size="18"></i>
+                        </button>
+                        <button 
+                            @click="activeTab = 'quotes'"
+                            :class="activeTab === 'quotes' ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'"
+                            class="w-full flex items-center justify-between p-4 rounded-2xl transition-all"
+                        >
+                            <div class="flex items-center gap-3 font-bold">
+                                <i data-lucide="zap" size="20"></i> 핵심 명언
+                            </div>
+                            <i data-lucide="chevron-right" size="18"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Moral System Card -->
+                <div class="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-3xl p-6 text-white shadow-xl">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="calendar" size="20"></i> 도덕적 수련 시스템
+                    </h3>
+                    <div class="space-y-4 text-sm opacity-90">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="mt-1 flex-shrink-0"></i>
+                            <p><strong>1주 1덕목 집중:</strong> 13주 동안 순차적으로 각 덕목을 체득화합니다.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="pen-tool" class="mt-1 flex-shrink-0"></i>
+                            <p><strong>자기 성찰 수첩:</strong> 매일 저녁 어긴 덕목에 검은 점을 찍어 기록합니다.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="target" class="mt-1 flex-shrink-0"></i>
+                            <p><strong>반복의 힘:</strong> 1년에 총 4회의 사이클을 반복하여 인격으로 만듭니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Content Area -->
+            <div class="lg:col-span-8 bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                <div class="p-8 h-full">
+                    
+                    <transition name="fade" mode="out-in">
+                        <!-- Tab 1: 13 Virtues -->
+                        <div v-if="activeTab === 'virtues'" key="virtues">
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">13가지 덕목 (13 Virtues)</h2>
+                                <span class="text-slate-400 text-sm">Franklin's Values</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto max-h-[600px] pr-2 custom-scrollbar">
+                                <div v-for="v in virtues" :key="v.id" class="group p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-md hover:border-blue-200 transition-all">
+                                    <div class="flex items-center gap-4 mb-2">
+                                        <span class="text-2xl">{{ v.icon }}</span>
+                                        <h4 class="font-bold text-slate-800 text-lg">{{ v.id }}. {{ v.name }}</h4>
+                                    </div>
+                                    <p class="text-slate-600 text-sm leading-relaxed">{{ v.desc }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Daily Routine -->
+                        <div v-else-if="activeTab === 'routine'" key="routine">
+                            <div class="flex justify-between items-center mb-8">
+                                <h2 class="text-2xl font-bold text-slate-800">일과표 (Daily Routine)</h2>
+                                <i data-lucide="clock" class="text-slate-300"></i>
+                            </div>
+                            <div class="space-y-6">
+                                <div v-for="(item, idx) in routine" :key="idx" class="relative pl-8 border-l-2 border-slate-100 pb-2 last:pb-0 group">
+                                    <div :class="[
+                                        'absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white shadow-sm transition-colors',
+                                        item.type === 'morning' ? 'bg-amber-400' : 
+                                        item.type === 'work' ? 'bg-blue-500' : 
+                                        item.type === 'rest' ? 'bg-emerald-400' : 
+                                        item.type === 'evening' ? 'bg-indigo-400' : 'bg-slate-300'
+                                    ]"></div>
+                                    
+                                    <div class="mb-1 flex items-center gap-3">
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">{{ item.time }}</span>
+                                        <span :class="[
+                                            'text-[10px] px-2 py-0.5 rounded-full font-bold uppercase',
+                                            item.type === 'morning' ? 'bg-amber-50 text-amber-600' : 
+                                            item.type === 'work' ? 'bg-blue-50 text-blue-600' : 
+                                            item.type === 'evening' ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-100 text-slate-600'
+                                        ]">
+                                            {{ item.type }}
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="bg-slate-50 p-4 rounded-2xl group-hover:bg-slate-100 transition-all border border-transparent group-hover:border-slate-200">
+                                        <h4 class="font-bold text-slate-800 text-lg mb-1">{{ item.task }}</h4>
+                                        <p class="text-slate-600 text-sm mb-3">{{ item.detail }}</p>
+                                        
+                                        <div v-if="item.question" class="flex items-center gap-2 bg-white/80 p-3 rounded-xl border border-blue-100">
+                                            <i v-if="item.type === 'morning'" data-lucide="sun" size="16" class="text-amber-500"></i>
+                                            <i v-else data-lucide="moon" size="16" class="text-indigo-500"></i>
+                                            <span class="text-sm font-bold text-blue-700 italic">"{{ item.question }}"</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Quotes -->
+                        <div v-else-if="activeTab === 'quotes'" key="quotes" class="h-full flex flex-col">
+                            <h2 class="text-2xl font-bold text-slate-800 mb-8">핵심 원칙 (Core Principles)</h2>
+                            <div class="grid grid-cols-1 gap-6">
+                                <div class="p-8 bg-amber-50 rounded-3xl border-l-8 border-amber-400">
+                                    <h3 class="text-amber-800 font-black text-2xl mb-2">"시간은 돈이다"</h3>
+                                    <p class="text-amber-700 leading-relaxed">시간의 가치를 경제적 자원만큼 소중히 여겨야 합니다. 시간 낭비는 곧 자원의 낭비입니다.</p>
+                                </div>
+                                <div class="p-8 bg-blue-50 rounded-3xl border-l-8 border-blue-400">
+                                    <h3 class="text-blue-800 font-black text-2xl mb-2">"기회는 다시 오지 않는다"</h3>
+                                    <p class="text-blue-700 leading-relaxed">잃어버린 시간은 다시 찾을 수 없습니다. 매 순간의 몰입과 현재에 집중하는 태도가 중요합니다.</p>
+                                </div>
+                                <div class="p-8 bg-slate-900 text-white rounded-3xl border-l-8 border-emerald-400">
+                                    <h3 class="text-emerald-400 font-black text-2xl mb-2">"준비에 실패하는 것은..."</h3>
+                                    <p class="text-slate-300 leading-relaxed text-lg">"...실패를 준비하는 것이다." 모든 일의 성패는 철저한 계획(Order)에서 시작됩니다.</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto pt-8">
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+                                    <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2">
+                                        <i data-lucide="book-open" size="18"></i> 현대의 '프랭클린 플래너'로 계승
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        그의 철학은 오늘날 우선순위 부여(A-B-C)와 가치 기반 시간 관리 시스템인 프랭클린 플래너로 발전했습니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
+            </div>
+        </main>
+
+        <footer class="max-w-6xl mx-auto mt-12 text-center text-slate-400 text-sm pb-8">
+            <p>© 1706-1790 Benjamin Franklin Philosophy Infographic (Vue.js Version)</p>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted, nextTick, watch } = Vue;
+
+        createApp({
+            setup() {
+                const activeTab = ref('virtues');
+
+                const virtues = [
+                    { id: 1, name: "절제", desc: "배부르도록 먹지 말고, 취하도록 마시지 말라.", icon: "🍎" },
+                    { id: 2, name: "침묵", desc: "타인이나 자신에게 이익이 없는 말은 삼가라.", icon: "🤫" },
+                    { id: 3, name: "질서", desc: "모든 물건은 제자리에, 모든 일은 시간을 정해서.", icon: "📏" },
+                    { id: 4, name: "결단", desc: "해야 할 일은 결심하고, 결심한 것은 반드시 실행하라.", icon: "🔨" },
+                    { id: 5, name: "절약", desc: "나와 남에게 유익한 일 외에는 지출하지 말라.", icon: "💰" },
+                    { id: 6, name: "근면", desc: "시간을 허비하지 말고, 언제나 유용한 일을 하라.", icon: "⚙️" },
+                    { id: 7, name: "진실", desc: "속임수를 쓰지 말라. 순수하고 정의롭게 생각하라.", icon: "🤝" },
+                    { id: 8, name: "정의", desc: "남에게 피해를 주지 말고 마땅한 이익을 돌려주라.", icon: "⚖️" },
+                    { id: 9, name: "중용", desc: "극단을 피하고, 화내는 것을 참으라.", icon: "🧘" },
+                    { id: 10, name: "청결", desc: "몸, 옷, 집의 불결함을 용납하지 말라.", icon: "🧼" },
+                    { id: 11, name: "침착", desc: "사소한 사고에 마음을 흔들리지 말라.", icon: "🌊" },
+                    { id: 12, name: "순결", desc: "건강과 자손을 위해서만 절제하여 행동하라.", icon: "🤍" },
+                    { id: 13, name: "겸손", desc: "예수와 소크라테스를 본받으라.", icon: "🙏" }
+                ];
+
+                const routine = [
+                    { time: "05:00 - 08:00", task: "아침 루틴", detail: "세면, 기도, 공부, 아침 식사, 업무 계획 수립", question: "오늘 무슨 좋은 일을 할 것인가?", type: "morning" },
+                    { time: "08:00 - 12:00", task: "오전 업무", detail: "맡은 바 업무에 집중", type: "work" },
+                    { time: "12:00 - 13:00", task: "정오 휴식", detail: "점심 식사, 독서 및 회계 장부 정리", type: "rest" },
+                    { time: "13:00 - 17:00", task: "오후 업무", detail: "업무 지속", type: "work" },
+                    { time: "18:00 - 22:00", task: "저녁 및 성찰", detail: "물건 정리, 저녁 식사, 음악/대화, 하루 성과 복기", question: "오늘 무슨 좋은 일을 하였는가?", type: "evening" },
+                    { time: "22:00 - 05:00", task: "취침", detail: "충분한 휴식 (7시간)", type: "sleep" }
+                ];
+
+                // 아이콘 렌더링 함수
+                const refreshIcons = () => {
+                    nextTick(() => {
+                        lucide.createIcons();
+                    });
+                };
+
+                onMounted(() => {
+                    refreshIcons();
+                });
+
+                // 탭이 바뀔 때마다 아이콘을 다시 생성해줍니다.
+                watch(activeTab, () => {
+                    refreshIcons();
+                });
+
+                return {
+                    activeTab,
+                    virtues,
+                    routine
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
